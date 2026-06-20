@@ -22,7 +22,10 @@ export default function Home() {
 
   if (!mounted) {
     return (
-      <div className="grid min-h-screen place-items-center bg-background">
+      <div
+        className="grid min-h-screen place-items-center"
+        style={{ backgroundColor: "#0f172a" }}
+      >
         <div className="size-8 animate-pulse rounded-full bg-fire/30" />
       </div>
     );

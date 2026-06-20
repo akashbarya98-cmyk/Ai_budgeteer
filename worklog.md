@@ -20,3 +20,19 @@ Stage Summary:
 - Agent Browser + VLM verification confirmed: dashboard (KPIs, alert, charts, model usage, efficiency), optimizer (before/after, 98% savings, confetti, routing reason), leaderboard (podium, progress bars, trends, scoring info), settings (thresholds, model policy, alerts, save), theme toggle (dark↔light both render cleanly), mobile responsive (bottom nav, stacked KPIs, no overflow).
 - All 5 screens match the design spec: dark-mode default, fire-red/emerald accents, glass morphism cards, Inter typography, micro-interactions (hover lift, pulse, glow, confetti, count-up animations).
 - Toggle mode requirement fulfilled via ThemeToggle in header (and login screen corner).
+
+---
+Task ID: 2
+Agent: main
+Task: Fix white screen flash at initial load (before dark theme applies).
+
+Work Log:
+- Diagnosed root cause: SSR shipped <html> with no theme class, so `bg-background` resolved to the LIGHT palette (white) during first paint. next-themes only added the `dark` class via a client-side inline script, causing a brief white flash before dark kicked in.
+- Fix 1 (layout.tsx): Set `className="dark"` on <html> in SSR so the dark palette is active from the very first byte. Added a synchronous inline script in <head> that reads `localStorage.getItem('theme')` and removes `dark` only if the user previously chose light — this applies the correct theme before paint for both fresh visitors (dark) and returning light-mode users (light). Kept `suppressHydrationWarning` so next-themes can reconcile cleanly.
+- Fix 2 (page.tsx): Replaced the pre-mount loader's `bg-background` class with an explicit inline `style={{ backgroundColor: "#0f172a" }}` so the transient loading state can never flash white, even before CSS loads.
+- Verified SSR output: `curl` confirms `<html lang="en" class="dark">` ships in the initial HTML response (no white flash possible).
+- Verified via Agent Browser: fresh load (cleared storage) → html class "dark", body bg lab(3.6% lightness) = deep space dark. Returning light-mode user → inline script removes 'dark' before paint → light mode shows immediately, persists across reload.
+- VLM confirmed: "dark themed with no white areas, background is dark navy/slate." No hydration warnings or console errors.
+
+Stage Summary:
+- White screen flash eliminated. Dark theme is the SSR default and applies from the first byte; the inline head script switches to light only when the user previously chose it. Theme toggle still works in both directions and persists across reloads.
