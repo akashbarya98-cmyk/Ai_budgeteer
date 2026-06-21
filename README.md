@@ -320,7 +320,7 @@ Demo Video:
 (Add YouTube/Loom Link)
 
 Live Demo:
-(Add Deployment Link)
+(https://aibudgeteeer.vercel.app/)
 
 ---
 
