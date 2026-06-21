@@ -90,7 +90,8 @@ Configure budget thresholds and automated alerts.
 
 ## Dashboard
 
-![Dashboard](docs/dashboard.png)
+<img width="1883" height="916" alt="Screenshot 2026-06-21 112436" src="https://github.com/user-attachments/assets/7a0bb710-6096-4429-8f70-2579c212a95b" />
+
 
 Monitor AI spending, burn rate, budget utilization, and cost-saving opportunities.
 
@@ -98,7 +99,8 @@ Monitor AI spending, burn rate, budget utilization, and cost-saving opportunitie
 
 ## Prompt Optimizer
 
-![Prompt Optimizer](docs/optimizer.png)
+<img width="1912" height="921" alt="Screenshot 2026-06-21 112500" src="https://github.com/user-attachments/assets/16342311-07d1-4199-8ddd-63880b2cc40a" />
+
 
 Reduce token usage and optimize prompts for lower AI costs.
 
@@ -106,7 +108,8 @@ Reduce token usage and optimize prompts for lower AI costs.
 
 ## Efficiency Leaderboard
 
-![Leaderboard](docs/leaderboard.png)
+<img width="1892" height="923" alt="Screenshot 2026-06-21 112533" src="https://github.com/user-attachments/assets/b5554d67-724a-4453-ae21-6e50ca592a9e" />
+
 
 Track team performance and compare AI efficiency across departments.
 
@@ -114,7 +117,7 @@ Track team performance and compare AI efficiency across departments.
 
 ## Budget Settings
 
-![Settings](docs/settings.png)
+<img width="1882" height="911" alt="Screenshot 2026-06-21 112556" src="https://github.com/user-attachments/assets/d0830593-9f05-4161-9621-1c8e860166cd" />
 
 Configure spending limits and alert thresholds.
 
@@ -276,9 +279,6 @@ Create a `.env` file:
 DATABASE_URL=
 NEXTAUTH_SECRET=
 NEXTAUTH_URL=
-```
-
-> Never commit secrets or API keys to GitHub.
 
 ---
 
@@ -308,6 +308,9 @@ scripts/
 Bharat Academix CodeQuest 2026
 
 Project: AI Budgeteer
+
+Team Member
+AKASH AHIRWAR (Team Leader)
 
 ---
 
