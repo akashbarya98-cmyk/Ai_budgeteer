@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { motion } from "framer-motion";
 import { Bell, LogOut, User as UserIcon, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,14 +16,31 @@ import {
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Logo } from "@/components/logo";
 import { useAppStore } from "@/lib/store";
+import { cn } from "@/lib/utils";
+
+type NavId = "dashboard" | "optimizer" | "leaderboard" | "settings";
 
 interface AppHeaderProps {
-  onNavigate: (screen: "dashboard" | "optimizer" | "leaderboard" | "settings") => void;
+  onNavigate: (screen: NavId) => void;
 }
+
+const NAV_ITEMS: { id: NavId; label: string }[] = [
+  { id: "dashboard", label: "Dashboard" },
+  { id: "optimizer", label: "Optimizer" },
+  { id: "leaderboard", label: "Leaderboard" },
+  { id: "settings", label: "Settings" },
+];
 
 export function AppHeader({ onNavigate }: AppHeaderProps) {
   const user = useAppStore((s) => s.user);
   const logout = useAppStore((s) => s.logout);
+  const activeScreen = useAppStore((s) => s.activeScreen);
+
+  // Determine the active nav tab. activeScreen isn't persisted, so on reload
+  // it may be "login" even though the user is authenticated — default to dashboard.
+  const activeNav: NavId = NAV_ITEMS.some((n) => n.id === activeScreen)
+    ? (activeScreen as NavId)
+    : "dashboard";
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 glass-strong">
@@ -37,21 +55,41 @@ export function AppHeader({ onNavigate }: AppHeaderProps) {
         </button>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 md:flex">
-          {[
-            { id: "dashboard", label: "Dashboard" },
-            { id: "optimizer", label: "Optimizer" },
-            { id: "leaderboard", label: "Leaderboard" },
-            { id: "settings", label: "Settings" },
-          ].map((item) => (
-            <button
-              key={item.id}
-              onClick={() => onNavigate(item.id as "dashboard" | "optimizer" | "leaderboard" | "settings")}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-            >
-              {item.label}
-            </button>
-          ))}
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+          {NAV_ITEMS.map((item) => {
+            const isActive = activeNav === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => onNavigate(item.id)}
+                aria-current={isActive ? "page" : undefined}
+                className={cn(
+                  "relative rounded-lg px-3.5 py-2 text-sm font-medium transition-colors",
+                  isActive
+                    ? "text-fire"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {item.label}
+                {/* Sliding pill background */}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-fire/10 ring-1 ring-fire/25"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                {/* Glowing bottom indicator */}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-underline"
+                    className="pointer-events-none absolute inset-x-2 -bottom-[1px] h-[2px] rounded-full bg-gradient-to-r from-fire to-ember shadow-[0_0_10px_2px_var(--fire)]"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </button>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-2">

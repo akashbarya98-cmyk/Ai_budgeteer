@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Home, Zap, Trophy, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ScreenId } from "@/lib/store";
@@ -34,12 +35,20 @@ export function MobileNav({ active, onNavigate }: MobileNavProps) {
               aria-label={item.label}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "flex flex-1 flex-col items-center justify-center gap-1 rounded-lg py-2 text-xs font-medium transition-colors",
+                "relative flex flex-1 flex-col items-center justify-center gap-1 rounded-lg py-2 text-xs font-medium transition-colors",
                 isActive
                   ? "text-fire"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
+              {/* Active pill background */}
+              {isActive && (
+                <motion.span
+                  layoutId="mobile-nav-pill"
+                  className="pointer-events-none absolute inset-x-2 inset-y-1 -z-10 rounded-lg bg-fire/10 ring-1 ring-fire/25"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
               <Icon
                 className={cn("size-5 transition-transform", isActive && "scale-110")}
                 strokeWidth={isActive ? 2.5 : 2}

@@ -36,8 +36,15 @@ export default function Home() {
     return <LoginScreen />;
   }
 
+  // When authenticated, clamp the active screen to a valid app screen.
+  // (activeScreen isn't persisted, so on reload it resets to "login".)
+  const APP_SCREENS: ScreenId[] = ["dashboard", "optimizer", "leaderboard", "settings"];
+  const effectiveScreen: ScreenId = APP_SCREENS.includes(activeScreen)
+    ? activeScreen
+    : "dashboard";
+
   const navigate = (s: ScreenId) => setScreen(s);
-  const screenKey = activeScreen;
+  const screenKey = effectiveScreen;
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -52,18 +59,18 @@ export default function Home() {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
-            {activeScreen === "dashboard" && (
+            {effectiveScreen === "dashboard" && (
               <DashboardScreen onNavigate={navigate} />
             )}
-            {activeScreen === "optimizer" && <OptimizerScreen />}
-            {activeScreen === "leaderboard" && <LeaderboardScreen />}
-            {activeScreen === "settings" && <SettingsScreen />}
+            {effectiveScreen === "optimizer" && <OptimizerScreen />}
+            {effectiveScreen === "leaderboard" && <LeaderboardScreen />}
+            {effectiveScreen === "settings" && <SettingsScreen />}
           </motion.div>
         </AnimatePresence>
       </main>
 
       <Footer />
-      <MobileNav active={activeScreen} onNavigate={navigate} />
+      <MobileNav active={effectiveScreen} onNavigate={navigate} />
     </div>
   );
 }

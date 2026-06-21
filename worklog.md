@@ -36,3 +36,17 @@ Work Log:
 
 Stage Summary:
 - White screen flash eliminated. Dark theme is the SSR default and applies from the first byte; the inline head script switches to light only when the user previously chose it. Theme toggle still works in both directions and persists across reloads.
+
+---
+Task ID: 3
+Agent: main
+Task: Add an active-state effect on the navigation tabs so the user can see which page/option they're currently on (per uploaded screenshot feedback).
+
+Work Log:
+- Desktop header (app-header.tsx): Read activeScreen from the Zustand store. Each nav button (Dashboard/Optimizer/Leaderboard/Settings) now shows, when active: fire-red text color, a sliding pill background (bg-fire/10 + ring-fire/25) using framer-motion layoutId="nav-pill", and a glowing bottom underline (gradient fire→ember with box-shadow glow) using layoutId="nav-underline". The shared layoutId makes both the pill and underline smoothly slide between tabs with a spring transition (stiffness 380, damping 30). Added pointer-events-none to the motion spans so clicks always hit the button. Added aria-current="page" for accessibility.
+- Mobile bottom nav (mobile-nav.tsx): Added a matching sliding pill background (layoutId="mobile-nav-pill") behind the active item, keeping the existing icon scale + fire color. pointer-events-none on the pill.
+- Fixed a pre-existing bug exposed during testing: activeScreen isn't persisted in the Zustand store, so on reload it reset to "login" even when the user was authenticated — leaving the main content empty. Fixed in page.tsx by clamping to "dashboard" when activeScreen isn't a valid app screen (effectiveScreen), and in app-header.tsx by defaulting activeNav to "dashboard". This ensures the Dashboard tab is correctly highlighted after a reload.
+- Verified via Agent Browser: clicked through all 4 tabs (Optimizer/Leaderboard/Settings/Dashboard) — each click correctly updates the heading, the active nav aria-current="page", and the active tab text color to fire-red. VLM confirmed the active tab shows a "red pill background and glow, clearly visible" on desktop and a "highlighted background/indicator" on mobile. Zero console errors/warnings.
+
+Stage Summary:
+- Active nav indicator implemented with a smooth sliding pill + glowing underline (desktop) and pill background (mobile), both powered by framer-motion layoutId for animated transitions between tabs. Reload-state bug also fixed so the correct tab is highlighted on page refresh.
