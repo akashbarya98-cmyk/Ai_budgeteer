@@ -83,7 +83,8 @@ Configure budget thresholds and automated alerts.
 
 ## Login & Authentication
 
-![Login Screen](docs/login.png)
+<img width="1887" height="922" alt="Screenshot 2026-06-21 112351" src="https://github.com/user-attachments/assets/d4ad797b-a6c2-410d-8bdc-7348c1b5fdc4" />
+
 
 ---
 
