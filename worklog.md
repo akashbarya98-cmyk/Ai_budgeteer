@@ -50,3 +50,15 @@ Work Log:
 
 Stage Summary:
 - Active nav indicator implemented with a smooth sliding pill + glowing underline (desktop) and pill background (mobile), both powered by framer-motion layoutId for animated transitions between tabs. Reload-state bug also fixed so the correct tab is highlighted on page refresh.
+
+---
+Task ID: 4
+Agent: main
+Task: Remove the glowing underline effect from the active nav tab — keep only the sliding pill background.
+
+Work Log:
+- Edited app-header.tsx: removed the second motion.span (layoutId="nav-underline") that rendered the gradient fire→ember glowing bottom indicator. Kept only the sliding pill background (layoutId="nav-pill", bg-fire/10 + ring-fire/25) and the fire-red text color on the active tab.
+- Verified via Agent Browser: active Dashboard tab now has exactly 1 span (the pill) — no underline span. Switched to Optimizer tab → pill slid over correctly. VLM confirmed: "Dashboard tab is active, pill-shaped background highlight, no underline" and "Optimizer tab is active, has a pill background, no underline." Zero console errors.
+
+Stage Summary:
+- Active nav indicator now shows only the sliding pill background (no underline). The framer-motion layoutId animation still smoothly slides the pill between tabs on click.

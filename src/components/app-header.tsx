@@ -79,14 +79,6 @@ export function AppHeader({ onNavigate }: AppHeaderProps) {
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
-                {/* Glowing bottom indicator */}
-                {isActive && (
-                  <motion.span
-                    layoutId="nav-underline"
-                    className="pointer-events-none absolute inset-x-2 -bottom-[1px] h-[2px] rounded-full bg-gradient-to-r from-fire to-ember shadow-[0_0_10px_2px_var(--fire)]"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
               </button>
             );
           })}
