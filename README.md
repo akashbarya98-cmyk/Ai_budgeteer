@@ -317,10 +317,11 @@ AKASH AHIRWAR (Team Leader)
 # 🎥 Demo
 
 Demo Video:
-(Add YouTube/Loom Link)
+(https://youtu.be/tEIsADlqQsk?si=I8COXWDFVIVRMvJR)
 
 Live Demo:
 (https://aibudgeteeer.vercel.app/)
+
 
 ---
 
